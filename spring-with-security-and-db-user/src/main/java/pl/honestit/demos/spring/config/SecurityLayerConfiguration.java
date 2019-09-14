@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.sql.DataSource;
+
 @Configuration
 /*
     Nie dodajemy adnotacji @EnableWebSecurity, bo to zostało już zrobione
@@ -15,10 +17,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
 
+    /*
+        Wstrzykiwane jest podstawowe źródło danych, skonfigurowane w pliku application.properties
+     */
+    private final DataSource dataSource;
+
+    public SecurityLayerConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {
