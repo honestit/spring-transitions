@@ -54,6 +54,20 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                // Strony związane z rejestracją dostępne dla wszystkich
+                .antMatchers("/register", "register/**").permitAll()
+                // Strony związane z logowaniem i wylogowaniem dostępne dla
+                // użytkowników uwierzytelnionych (po zalogowaniu)
+                .antMatchers("/login", "/logout").authenticated()
+                // Strony zaczynające się od /user dostępne dla użytkowników
+                // uwierzytelnionych z rolą USER
+                .antMatchers("/user", "/user/**").hasRole("USER")
+                // Strony zaczynające się od /manager dostępne dla użytkowników
+                // uwierzytelnionych z rolą MANAGER
+                .antMatchers("/manager", "/manager/**").hasRole("MANAGER")
+                // Strony zaczynające się od /admin dostępne dla użytkowników
+                // uwierzytelnionych z rolą ADMIN
+                .antMatchers("/admin", "/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
