@@ -3,6 +3,7 @@ package pl.honestit.demos.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,5 +28,11 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser("manager").password("{noop}pass").roles("USER", "MANAGER")
                 .and()
                 .withUser("admin").password("{noop}s3cr3t").roles("ADMIN");
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/h2-console/**");
     }
 }
