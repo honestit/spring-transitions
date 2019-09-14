@@ -38,7 +38,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @param roles zbiór ról
      * @return lista użytkowników należących do przynajmniej jednej z ról
      */
-    List<UserEntity> findDistinctAllByRoles(Set<UserRole> roles);
+    List<UserEntity> findDistinctAllByRoles_RoleName(Set<String> roles);
 
     /**
      * Pobieranie użytkowników aktywnych
@@ -59,7 +59,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      *
      * @return lista użytkowników
      */
-    List<UserEntity> findFirst100ByOOrderByCreatedOnDesc();
+    List<UserEntity> findFirst100ByOrderByCreatedOnDesc();
 
     /**
      * Pobieranie listy 100 ostatnio utworzonych użytkowników (zapytanie natywne)
