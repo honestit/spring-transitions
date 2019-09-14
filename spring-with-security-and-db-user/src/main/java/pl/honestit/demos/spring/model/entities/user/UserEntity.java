@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.honestit.demos.spring.model.entities.base.ParentEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +25,9 @@ public class UserEntity extends ParentEntity {
     private String password;
     private Boolean enabled = Boolean.FALSE;
     private String email;
+
+    @OneToOne(mappedBy = "owner", fetch = FetchType.LAZY)
+    private UserDetailsEntity details;
 
     @Override
     public boolean equals(Object o) {
