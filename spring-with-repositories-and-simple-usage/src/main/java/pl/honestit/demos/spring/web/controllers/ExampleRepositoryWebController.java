@@ -46,4 +46,16 @@ public class ExampleRepositoryWebController {
 
         return "Zakończone";
     }
+
+    @GetMapping("/advanced")
+    @ResponseBody
+    public String testAdvancedQueries() {
+        System.out.println("--- Lista najnowszych 100 użytkowników ---");
+        userRepository.findFirst100ByOrderByCreatedOnDesc().forEach(System.out::println);
+
+        System.out.println("--- Lista najnowszych 100 użytkowników (zapytanie natywne) ---");
+        userRepository.findLast100Users().forEach(System.out::println);
+
+        return "Zakończone";
+    }
 }
