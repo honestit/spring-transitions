@@ -1,5 +1,6 @@
 package pl.honestit.demos.spring.web.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 
 @Controller
 @RequestMapping("/examples/repositories")
+@Slf4j
 public class ExampleRepositoryWebController {
 
     private final UserRepository userRepository;
@@ -23,22 +25,22 @@ public class ExampleRepositoryWebController {
     @GetMapping("/simple")
     @ResponseBody
     public String testSimpleQueries() {
-        System.out.println("--- Wszyscy użytkownicy ---");
+        log.info("--- Wszyscy użytkownicy ---");
         userRepository.findAll().forEach(System.out::println);
 
-        System.out.println("--- Aktywni użytkownicy ---");
+        log.info("--- Aktywni użytkownicy ---");
         userRepository.findAllByEnabledIsTrue().forEach(System.out::println);
 
-        System.out.println("--- Wszyscy nieaktywni użytkownicy ---");
+        log.info("--- Wszyscy nieaktywni użytkownicy ---");
         userRepository.findAllByEnabledIsFalse().forEach(System.out::println);
 
-        System.out.println("--- Wszyscy użytkownicy w roli USER ---");
+        log.info("--- Wszyscy użytkownicy w roli USER ---");
         userRepository.findDistinctAllByRoles_RoleName(
                 new HashSet<>(
                         Arrays.asList("ROLE_USER")))
                 .forEach(System.out::println);
 
-        System.out.println("--- Wszyscy użytkownicy w roli MANAGER lub ADMIN ---");
+        log.info("--- Wszyscy użytkownicy w roli MANAGER lub ADMIN ---");
         userRepository.findDistinctAllByRoles_RoleName(
                 new HashSet<>(
                         Arrays.asList("ROLE_MANAGER","ROLE_ADMIN")))
@@ -50,10 +52,10 @@ public class ExampleRepositoryWebController {
     @GetMapping("/advanced")
     @ResponseBody
     public String testAdvancedQueries() {
-        System.out.println("--- Lista najnowszych 100 użytkowników ---");
+        log.info("--- Lista najnowszych 100 użytkowników ---");
         userRepository.findFirst100ByOrderByCreatedOnDesc().forEach(System.out::println);
 
-        System.out.println("--- Lista najnowszych 100 użytkowników (zapytanie natywne) ---");
+        log.info("--- Lista najnowszych 100 użytkowników (zapytanie natywne) ---");
         userRepository.findLast100Users().forEach(System.out::println);
 
         return "Zakończone";

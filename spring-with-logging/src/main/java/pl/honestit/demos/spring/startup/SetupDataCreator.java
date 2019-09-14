@@ -1,5 +1,7 @@
 package pl.honestit.demos.spring.startup;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,12 +11,13 @@ import pl.honestit.demos.spring.model.entities.user.UserEntity;
 import pl.honestit.demos.spring.model.entities.user.UserRole;
 
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 @Component
+@Slf4j
 public class SetupDataCreator implements ApplicationRunner {
+
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -26,9 +29,9 @@ public class SetupDataCreator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        System.out.println("--- Tworzenie użytkowników głównych ---");
+        log.info("--- Tworzenie użytkowników głównych ---");
         createMainUsers();
-        System.out.println("--- Tworzenie użytkowników testowych ---");
+        log.info("--- Tworzenie użytkowników testowych ---");
         createTestUsers();
     }
 
@@ -50,7 +53,7 @@ public class SetupDataCreator implements ApplicationRunner {
         userRepository.findByUsername(username)
                 .ifPresentOrElse(
                         user -> {
-                            System.out.println("Użytkownik już istnieje: " + user.getUsername());
+                            log.debug("Użytkownik już istnieje: " + user.getUsername());
                         },
                         () -> {
                             UserEntity user = new UserEntity();
@@ -60,6 +63,7 @@ public class SetupDataCreator implements ApplicationRunner {
                             user.setEnabled(true);
                             user.getRoles().addAll(Stream.of(roles).map(role -> "ROLE_".concat(role)).map(UserRole::new).collect(Collectors.toSet()));
                             userRepository.save(user);
+                            log.debug("Utworzono użytkownika: " + user);
                         }
                 );
     }
