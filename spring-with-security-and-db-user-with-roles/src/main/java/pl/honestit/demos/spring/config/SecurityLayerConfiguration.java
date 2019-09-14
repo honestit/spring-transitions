@@ -38,9 +38,11 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("SELECT username, password, enabled FROM example_users WHERE username = ?")
-                // Role nie są obsługiwane więc mamy "fakowe" zapytanie, które dla każdego użytkownika
-                // zwraca ustaloną z góry rolę 'ROLE_USER'
-                .authoritiesByUsernameQuery("SELECT username, 'ROLE_USER' FROM example_users WHERE username = ?");
+                /*
+                    Zapytanie jest wykonywane bezpośrednio do jednej tabeli, ponieważ mamy w niej zarówno informacje
+                    o nazwie użytkownika jak i jego role.
+                 */
+                .authoritiesByUsernameQuery("SELECT username, role_name FROM example_users_roles WHERE username = ?");
     }
 
     @Override
