@@ -1,5 +1,6 @@
 package pl.honestit.demos.spring.model.entities;
 
+import lombok.*;
 import pl.honestit.demos.spring.model.entities.base.ParentEntity;
 
 import javax.persistence.Column;
@@ -10,36 +11,28 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "example_child_entities")
+@Getter @Setter @NoArgsConstructor
+/*
+    Przy metodzie toString należy uważać, bo nie powinniśmy w niej
+    uwzględniać pól mnogich (kolekcji) ani pól, które są typu innych encji
+ */
+@ToString
+/*
+    Metody equals i hashCode nadpisujemy w encjach zawsze ręcznie, z dużą
+    ostrożnością. Wybieramy do nich tylko pola, które:
+    - są unikalne
+    - nie mogą przyjmować wartości null
+    - nie zmieniają się w czasie życia rekordu (instancji encji)
+
+    Przykładem takiego pola może być pole username reprezentujące nazwę użytkownika
+    która nie może się zmieniać w czasie
+ */
 public class ChildEntity extends ParentEntity {
 
     @Column(unique = true, nullable = false)
     private String name;
     private Integer value;
     private LocalDateTime posted;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-
-    public LocalDateTime getPosted() {
-        return posted;
-    }
-
-    public void setPosted(LocalDateTime posted) {
-        this.posted = posted;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,14 +47,5 @@ public class ChildEntity extends ParentEntity {
     public int hashCode() {
 
         return Objects.hash(super.hashCode(), name);
-    }
-
-    @Override
-    public String toString() {
-        return "ChildEntity{" +
-                "name='" + name + '\'' +
-                ", value=" + value +
-                ", posted=" + posted +
-                "} " + super.toString();
     }
 }
