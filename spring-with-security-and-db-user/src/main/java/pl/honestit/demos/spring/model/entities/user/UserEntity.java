@@ -13,9 +13,11 @@ import java.util.Objects;
 @Entity
 /*
     Dodany indeks do szybkiego wyszukiwania po nazwie użytkownika
+    Dodany indeks do szybkiego wyszukiwania po email'u użytkownika
  */
 @Table(name = "example_users", indexes = {
-        @Index(columnList = "username")
+        @Index(columnList = "username"),
+        @Index(columnList = "email")
 })
 @Getter @Setter
 public class UserEntity extends ParentEntity {
@@ -25,6 +27,7 @@ public class UserEntity extends ParentEntity {
     @Column(nullable = false)
     private String password;
     private Boolean enabled = Boolean.FALSE;
+    private String email;
 
     @Override
     public boolean equals(Object o) {
