@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <!--
+        Do ustawienia na swoją nazwę aplikacji
+    -->
+    <property name="log.file.name" value="spring-transitions"/>
+
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -20,7 +25,7 @@
             Tutaj ustalamy nazwę naszego pliku z logami (podstawowego)
             i miejsce jego utworzenia
         -->
-        <file>${user.home}/spring-transitions.log</file>
+        <file>${user.home}/${log.file.name}.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
         </encoder>
@@ -31,7 +36,7 @@
                 Pliki z logami archiwalnymi będą umieszczane w katalogu logs.
                 Katalog logs powstanie automatycznie
             -->
-            <fileNamePattern>${user.home}/logs/spring-transitions-%d{yyyy-MM-dd}.%i.log
+            <fileNamePattern>${user.home}/logs/${log.file.name}-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
