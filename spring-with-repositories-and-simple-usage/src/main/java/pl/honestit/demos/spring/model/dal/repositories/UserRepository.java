@@ -55,4 +55,21 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      */
     List<UserEntity> findAllByEnabledIsFalse();
 
+    /**
+     * Pobieranie listy 100 ostatnio utworzonych użytkowników
+     *
+     * @return lista użytkowników
+     */
+    List<User> findFirst100ByOOrderByCreatedOnDesc();
+
+    /**
+     * Pobieranie listy 100 ostatnio utworzonych użytkowników (zapytanie natywne)
+     *
+     * @return lista użytkowników
+     */
+    @Query(nativeQuery = true,
+        value = "SELECT u.* FROM example_users u ORDER BY u.created_on DESC LIMIT 100"
+    )
+    List<User> findLast100Users();
+
 }
