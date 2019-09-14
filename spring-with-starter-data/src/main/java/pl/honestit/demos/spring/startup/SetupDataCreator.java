@@ -9,6 +9,8 @@ import pl.honestit.demos.spring.model.entities.user.UserEntity;
 import pl.honestit.demos.spring.model.entities.user.UserRole;
 
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 @Component
@@ -24,6 +26,21 @@ public class SetupDataCreator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        System.out.println("--- Tworzenie użytkowników głównych ---");
+        createMainUsers();
+        System.out.println("--- Tworzenie użytkowników testowych ---");
+        createTestUsers();
+    }
+
+    private void createTestUsers() {
+        LongStream.range(1, 100).forEach(this::createTestUser);
+    }
+
+    private void createTestUser(Long id) {
+        createUserIfNotExists("user" + id, "pass" + id, "email" + id + "@honestit.pl", "USER");
+    }
+
+    private void createMainUsers() {
         createUserIfNotExists("user", "pass", "user@honestit.pl", "USER");
         createUserIfNotExists("manager", "pass", "manager@honestit.pl", "MANAGER", "MANAGER");
         createUserIfNotExists("admin", "pass", "admin@honestit.pl", "ADMIN");
@@ -31,15 +48,19 @@ public class SetupDataCreator implements ApplicationRunner {
 
     private void createUserIfNotExists(String username, String password, String email, String... roles) {
         userRepository.findByUsername(username)
-                .ifPresentOrElse(System.out::println,
+                .ifPresentOrElse(
+                        user -> {
+                            System.out.println("Użytkownik już istnieje: " + user.getUsername());
+                        },
                         () -> {
                             UserEntity user = new UserEntity();
                             user.setUsername(username);
                             user.setPassword(passwordEncoder.encode(password));
                             user.setEmail(email);
                             user.setEnabled(true);
-                            user.getRoles().addAll(Stream.of(roles).map(UserRole::new).collect(Collectors.toSet()));
+                            user.getRoles().addAll(Stream.of(roles).map(role -> "ROLE_".concat(role)).map(UserRole::new).collect(Collectors.toSet()));
                             userRepository.save(user);
-                        });
+                        }
+                );
     }
 }
