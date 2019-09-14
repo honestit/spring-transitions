@@ -1,11 +1,18 @@
 package pl.honestit.demos.spring.model.entities.base;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @MappedSuperclass
+@Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor
+/*
+    Nie generujemy metody equals i hashCode z poziomu adnotacji lomboka,
+    aby było wyraźnie widać, że mają zostać oparte tylko na polu id
+ */
 public abstract class ParentEntity implements Serializable {
 
     @Id
@@ -15,30 +22,6 @@ public abstract class ParentEntity implements Serializable {
     private LocalDateTime createdOn;
     @Column(name = "updated_on")
     private LocalDateTime updatedOn;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public LocalDateTime getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(LocalDateTime updatedOn) {
-        this.updatedOn = updatedOn;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,12 +37,4 @@ public abstract class ParentEntity implements Serializable {
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
-        return "ParentEntity{" +
-                "id=" + id +
-                ", createdOn=" + createdOn +
-                ", updatedOn=" + updatedOn +
-                '}';
-    }
 }
