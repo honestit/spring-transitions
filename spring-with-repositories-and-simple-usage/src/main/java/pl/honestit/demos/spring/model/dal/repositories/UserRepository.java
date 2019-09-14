@@ -1,6 +1,5 @@
 package pl.honestit.demos.spring.model.dal.repositories;
 
-import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.honestit.demos.spring.model.entities.user.UserEntity;
@@ -21,7 +20,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @param username nazwa użytkownika
      * @return encja użytkownika
      */
-    User getByUsername(String username);
+    UserEntity getByUsername(String username);
 
     /**
      * Wyszukiwanie użytkownika po nazwie.
@@ -31,7 +30,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @param username nazwa użytkownika
      * @return encja użytkownika
      */
-    Optional<User> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 
     /**
      * Pobieranie unikalnych użytkowników na podstawie zbioru ról
@@ -60,7 +59,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      *
      * @return lista użytkowników
      */
-    List<User> findFirst100ByOOrderByCreatedOnDesc();
+    List<UserEntity> findFirst100ByOOrderByCreatedOnDesc();
 
     /**
      * Pobieranie listy 100 ostatnio utworzonych użytkowników (zapytanie natywne)
@@ -70,6 +69,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query(nativeQuery = true,
         value = "SELECT u.* FROM example_users u ORDER BY u.created_on DESC LIMIT 100"
     )
-    List<User> findLast100Users();
+    List<UserEntity> findLast100Users();
 
 }
