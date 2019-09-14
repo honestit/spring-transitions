@@ -5,7 +5,9 @@ import lombok.Setter;
 import pl.honestit.demos.spring.model.entities.base.ParentEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 /*
@@ -28,6 +30,25 @@ public class UserEntity extends ParentEntity {
 
     @OneToOne(mappedBy = "owner", fetch = FetchType.LAZY)
     private UserDetailsEntity details;
+
+    /*
+        Role nie tworzymy jako encje, a jako obiekty typu Embeddable.
+        Dla zbioru ról powstanie dedykowana tabela. Zostanie w niej utworzona
+        kolumna wynikająca z klasy UserRole ale również kolumna klucza głównego.
+
+        Relacja między tabelami oparta jest nie na polu id, a na polu username.
+        Dzięki temu tabela example_users_roles będzie składała się z pary kolumn
+        username i role_name i przykładowych wartości:
+
+        akowalski, ROLE_USER
+        akowalski, ROLE_MANAGER
+        admin, ROLE_ADMIN
+     */
+    @ElementCollection
+    @CollectionTable(name = "example_users_roles",
+        joinColumns = @JoinColumn(name = "username", referencedColumnName = "username")
+    )
+    private Set<UserRole> roles = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
