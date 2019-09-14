@@ -3,7 +3,6 @@ package pl.honestit.demos.spring.model.entities.user;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.security.core.userdetails.User;
 import pl.honestit.demos.spring.model.entities.base.ParentEntity;
 
 import javax.persistence.*;
@@ -16,7 +15,7 @@ public class UserDetailsEntity extends ParentEntity {
 
     @OneToOne
     @JoinColumn(name = "owner_id")
-    private User owner;
+    private UserEntity owner;
     /*
         Możemy mieć pole encji i pole kolumny na tą samą kolumnę.
         Wtedy pracujemy w kodzie na encji, a pole z kolumną jest polem
