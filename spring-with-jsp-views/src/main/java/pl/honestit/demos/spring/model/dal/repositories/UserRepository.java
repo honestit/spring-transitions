@@ -71,4 +71,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     )
     List<UserEntity> findLast100Users();
 
+    /**
+     * Pobieranie liczby użytkowników po nazwie
+     *
+     * @param username nazwa użytkownika
+     * @return liczba użytkowników o podanej nazwie
+     */
+    long countByUsername(String username);
 }
