@@ -43,8 +43,12 @@ public class RegistrationController {
             model.addAttribute("errors", errors);
             return Pages.Registration.FORM;
         } else {
-            registerUser(username, email, password);
-            model.addAttribute("successMsg", "Rejestracja przebiegła pomyślnie!");
+            try {
+                registerUser(username, email, password);
+                model.addAttribute("successMsg", "Rejestracja przebiegła pomyślnie!");
+            } catch (Exception ex) {
+                model.addAttribute("errorMsg", "Coś poszło nie tak");
+            }
             return Pages.Registration.SUCCESS;
         }
     }

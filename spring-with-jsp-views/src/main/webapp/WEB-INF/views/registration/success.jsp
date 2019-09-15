@@ -16,7 +16,7 @@
                 ${successMsg}
             </c:when>
             <c:otherwise>
-                Coś poszło nie tak!
+                ${errorMsg}
             </c:otherwise>
         </c:choose>
     </h1>
