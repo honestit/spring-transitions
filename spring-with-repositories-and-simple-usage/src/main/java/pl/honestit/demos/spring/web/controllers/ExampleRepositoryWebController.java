@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.honestit.demos.spring.model.dal.repositories.UserRepository;
-import pl.honestit.demos.spring.model.entities.user.UserRole;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -33,13 +32,13 @@ public class ExampleRepositoryWebController {
         userRepository.findAllByEnabledIsFalse().forEach(System.out::println);
 
         System.out.println("--- Wszyscy użytkownicy w roli USER ---");
-        userRepository.findDistinctAllByRoles_RoleName(
+        userRepository.findDistinctAllByRoles_RoleNameIn(
                 new HashSet<>(
                         Arrays.asList("ROLE_USER")))
                 .forEach(System.out::println);
 
         System.out.println("--- Wszyscy użytkownicy w roli MANAGER lub ADMIN ---");
-        userRepository.findDistinctAllByRoles_RoleName(
+        userRepository.findDistinctAllByRoles_RoleNameIn(
                 new HashSet<>(
                         Arrays.asList("ROLE_MANAGER","ROLE_ADMIN")))
                 .forEach(System.out::println);
