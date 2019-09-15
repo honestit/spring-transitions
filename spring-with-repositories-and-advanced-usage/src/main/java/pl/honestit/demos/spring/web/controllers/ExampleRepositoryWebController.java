@@ -1,6 +1,5 @@
 package pl.honestit.demos.spring.web.controllers;
 
-import antlr.collections.impl.IntRange;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -9,12 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.honestit.demos.spring.model.dal.repositories.UserRepository;
+import pl.honestit.demos.spring.model.entities.projections.user.Username;
+import pl.honestit.demos.spring.model.entities.projections.user.UsernameWithEmail;
+import pl.honestit.demos.spring.model.entities.projections.user.UsernameWithEmailWithFirstNameWithLastName;
+import pl.honestit.demos.spring.model.entities.projections.user.UsernameWithRoleNames;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 @Controller
 @RequestMapping("/examples/repositories")
@@ -104,8 +107,48 @@ public class ExampleRepositoryWebController {
                 .map(pageRequest -> userRepository.findAllWithDetailsByRoles_RoleNameIn(roles, pageRequest))
                 .forEach(System.out::println);
 
+        return "Zakończono";
+    }
 
+    @GetMapping("/projections")
+    @ResponseBody
+    public String testProjections() {
+        System.out.println("--- Nazwy użytkowników ---");
+        userRepository.findAllBy(Username.class)
+                .stream()
+                .map(Username::getUsername)
+                .forEach(System.out::println);
 
+        System.out.println("--- Nazwy użytkowników z emailami ---");
+        userRepository.findAllBy(UsernameWithEmail.class)
+                .stream()
+                .map(proj -> String.format("Usernanem: %s, email: %s",
+                        proj.getUsername(), proj.getEmail()))
+                .forEach(System.out::println);
+
+        System.out.println("--- Nazwy użytkowników z danymi szczegółówymi ---");
+        userRepository.findAllBy(UsernameWithEmailWithFirstNameWithLastName.class)
+                .stream()
+                .map(proj -> {
+                        if (proj.getDetails() != null) {
+                            return String.format("Username: %s, email: %s, firstName: %s, lastName: %s",
+                                    proj.getUsername(), proj.getEmail(),
+                                    proj.getDetails().getFirstName(),
+                                    proj.getDetails().getLastName());
+                        }
+                        else {
+                            return String.format("Username: %s, email: %s",
+                                    proj.getUsername(), proj.getEmail());
+                        }
+                })
+                .forEach(System.out::println);
+
+        System.out.println("--- Nazwy użytkowników z rolami ---");
+        userRepository.findAllBy(UsernameWithRoleNames.class)
+                .stream()
+                .map(proj -> String.format("Username: %s, roles: %s",
+                        proj.getUsername(), proj.getRoles().stream().map(UsernameWithRoleNames.RoleName::getRoleName).collect(Collectors.toSet())))
+                .forEach(System.out::println);
 
         return "Zakończono";
     }
