@@ -1,9 +1,9 @@
 package pl.honestit.demos.spring.startup;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.honestit.demos.spring.model.dal.repositories.UserRepository;
@@ -14,10 +14,13 @@ import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-@Component
 @Slf4j
+@Component
+/*
+    Wskazujemy, że nasz komponent ma być aktywny tylko w profilu o nazwie dev.
+ */
+@Profile("dev")
 public class SetupDataCreator implements ApplicationRunner {
-
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
