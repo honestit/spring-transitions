@@ -1,9 +1,10 @@
 package pl.honestit.demos.spring.model.dal.repositories;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.honestit.demos.spring.model.entities.user.UserEntity;
-import pl.honestit.demos.spring.model.entities.user.UserRole;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,5 +71,29 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
         value = "SELECT u.* FROM example_users u ORDER BY u.created_on DESC LIMIT 100"
     )
     List<UserEntity> findLast100Users();
+
+    /**
+     * Pobieranie listy użytkowników należących do podanych ról
+     *
+     * @param roles lista ról
+     * @param pageable obiekt wytycznych paginowania i sortowania
+     *
+     * @return lista użytkowników
+     */
+    List<UserEntity> findAllByRoles_RoleNameIn(Set<String> roles, Pageable pageable);
+
+    /**
+     * Pobieranie listy użytkowników należących do podanych ról.
+     * Metoda wykorzystuje @EntityGrapth, aby zoptymalizować zapytanie
+     * i od razu pobrać dane użytkowników
+     *
+     * @param roles lista ról
+     * @param pageable obiekt wytycznych paginowania i sortowania
+     * @return lista użytkowników
+     */
+    @EntityGraph(attributePaths = {"details"})
+    List<UserEntity> findAllWithDetailsByRoles_RoleNameIn(Set<String> roles, Pageable pageable);
+
+
 
 }
