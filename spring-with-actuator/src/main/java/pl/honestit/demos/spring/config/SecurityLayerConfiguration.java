@@ -1,5 +1,8 @@
 package pl.honestit.demos.spring.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,6 +19,7 @@ import javax.sql.DataSource;
     Nie dodajemy adnotacji @EnableWebSecurity, bo to zostało już zrobione
     przez Spring Boot
  */
+@Slf4j
 public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
 
     /*
@@ -54,6 +58,8 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                // Zabezpieczenie endpointów z projektu Spring Boot Actuator
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
                 // Strony związane z rejestracją dostępne dla wszystkich
                 .antMatchers("/register", "register/**").permitAll()
                 // Strony związane z logowaniem i wylogowaniem dostępne dla
