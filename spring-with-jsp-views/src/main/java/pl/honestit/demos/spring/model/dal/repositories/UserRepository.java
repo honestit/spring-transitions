@@ -3,7 +3,6 @@ package pl.honestit.demos.spring.model.dal.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.honestit.demos.spring.model.entities.user.UserEntity;
-import pl.honestit.demos.spring.model.entities.user.UserRole;
 
 import java.util.List;
 import java.util.Optional;
