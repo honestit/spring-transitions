@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import pl.honestit.demos.spring.model.entities.projections.user.Username;
 import pl.honestit.demos.spring.model.entities.user.UserEntity;
 
 import java.util.List;
@@ -92,8 +93,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, Project
      * @param pageable obiekt wytycznych paginowania i sortowania
      * @return lista użytkowników
      */
-    @EntityGraph(attributePaths = {"details"})
+    @EntityGraph(attributePaths = {"details"}, type = EntityGraph.EntityGraphType.LOAD)
     List<UserEntity> findAllWithDetailsByRoles_RoleNameIn(Set<String> roles, Pageable pageable);
+
+    List<Username> findAllUsersByEnabledIsTrue();
 
 
 
