@@ -38,7 +38,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @param roles zbiór ról
      * @return lista użytkowników należących do przynajmniej jednej z ról
      */
-    List<UserEntity> findDistinctAllByRoles_RoleName(Set<String> roles);
+    List<UserEntity> findDistinctAllByRoles_RoleNameIn(Set<String> roles);
 
     /**
      * Pobieranie użytkowników aktywnych
