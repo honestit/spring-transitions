@@ -7,7 +7,7 @@
     <title>Spring Transitions</title>
     <jsp:include page="/WEB-INF/views/fragments/head.jsp"/>
 </head>
-<body>
+<body class="has-navbar-fixed-top">
 <header>
     <jsp:include page="/WEB-INF/views/fragments/menu.jsp"/>
 </header>
