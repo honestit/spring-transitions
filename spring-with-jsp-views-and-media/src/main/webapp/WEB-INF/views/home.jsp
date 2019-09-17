@@ -13,7 +13,7 @@
 <section>
     <h1>Witaj w projekcie <strong>Spring Transitions</strong></h1>
 </section>
-<footer>
+<footer class="footer">
     <jsp:include page="/WEB-INF/views/fragments/footer.jsp"/>
 </footer>
 </body>

@@ -8,6 +8,6 @@
     Jej zawartość będzie umieszczona wewnątrz tagów <footer></footer>
 --%>
 
-<div>
-    <p>&copy; Michał Kupisiński, ${LocalDate.now().getYear()}</p>
+<div class="content has-text-centered">
+    <p><strong>Spring Transitions</strong> by Michał Kupisiński, ${LocalDate.now().getYear()}. &copy; Prawa licencyjne na zasadzie praw ogólnych</p>
 </div>
