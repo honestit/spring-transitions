@@ -62,6 +62,8 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
                 // Strona główna dostępna dla wszystkich
                 .antMatchers("/").permitAll()
+                // Dodanie dostępu do zasobów statycznych
+                .antMatchers("/media/**").permitAll()
                 // Strony związane z rejestracją dostępne dla wszystkich
                 .antMatchers("/register", "register/**").permitAll()
                 // Strony związane z logowaniem i wylogowaniem dostępne dla
