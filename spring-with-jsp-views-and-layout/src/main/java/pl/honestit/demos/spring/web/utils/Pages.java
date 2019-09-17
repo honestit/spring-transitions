@@ -1,10 +1,13 @@
 package pl.honestit.demos.spring.web.utils;
 
-public class Pages {
+public interface Pages {
 
-    public static class Registration {
+    String HOME = "/home";
 
-        public static final String FORM = "/registration/form";
-        public static final String SUCCESS = "/registration/success";
+
+    interface Registration {
+
+        String FORM = "/registration/form";
+        String SUCCESS = "/registration/success";
     }
 }
