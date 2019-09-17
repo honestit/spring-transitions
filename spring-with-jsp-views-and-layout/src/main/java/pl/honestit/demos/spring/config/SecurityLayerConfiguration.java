@@ -60,6 +60,8 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // Zabezpieczenie endpointów z projektu Spring Boot Actuator
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
+                // Strona główna dostępna dla wszystkich
+                .antMatchers("/").permitAll()
                 // Strony związane z rejestracją dostępne dla wszystkich
                 .antMatchers("/register", "register/**").permitAll()
                 // Strony związane z logowaniem i wylogowaniem dostępne dla
