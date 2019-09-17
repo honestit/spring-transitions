@@ -11,24 +11,26 @@
 <header>
     <jsp:include page="/WEB-INF/views/fragments/menu.jsp"/>
 </header>
-<section>
-    <h1>Rejestracja zakończona</h1>
-</section>
-<section>
-    <div>
-        <h3>
-            <c:choose>
-                <c:when test="${not empty successMsg}">
-                    ${successMsg}
-                </c:when>
-                <c:otherwise>
-                    ${errorMsg}
-                </c:otherwise>
-            </c:choose>
-        </h3>
+<section class="section">
+    <div class="container">
+        <h1 class="title">
+            Zakończono rejestrację
+        </h1>
+        <c:choose>
+            <c:when test="${not empty successMsg}">
+                <h2 class="subtitle" style="color: green;">
+                        ${successMsg}
+                </h2>
+            </c:when>
+            <c:otherwise>
+                <h2 class="subtitle" style="color: red;">
+                        ${errorMsg}
+                </h2>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
-<footer>
+<footer class="footer">
     <jsp:include page="/WEB-INF/views/fragments/footer.jsp"/>
 </footer>
 </body>
