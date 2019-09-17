@@ -58,27 +58,29 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                // Zabezpieczenie endpointów z projektu Spring Boot Actuator
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
-                // Strona główna dostępna dla wszystkich
-                .antMatchers("/").permitAll()
-                // Dodanie dostępu do zasobów statycznych
-                .antMatchers("/media/**").permitAll()
-                // Strony związane z rejestracją dostępne dla wszystkich
-                .antMatchers("/register", "register/**").permitAll()
-                // Strony związane z logowaniem i wylogowaniem dostępne dla
-                // użytkowników uwierzytelnionych (po zalogowaniu)
-                .antMatchers("/login", "/logout").authenticated()
-                // Strony zaczynające się od /user dostępne dla użytkowników
-                // uwierzytelnionych z rolą USER
-                .antMatchers("/user", "/user/**").hasRole("USER")
-                // Strony zaczynające się od /manager dostępne dla użytkowników
-                // uwierzytelnionych z rolą MANAGER
-                .antMatchers("/manager", "/manager/**").hasRole("MANAGER")
-                // Strony zaczynające się od /admin dostępne dla użytkowników
-                // uwierzytelnionych z rolą ADMIN
-                .antMatchers("/admin", "/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")      // Zabezpieczenie endpointów z projektu Spring Boot Actuator
+
+                .antMatchers("/").permitAll()                                           // Strona główna dostępna dla wszystkich
+
+                .antMatchers("/webjars/**").permitAll()                                 // Dodanie dostępu do zasobów obsługiwanych przez webjars
+
+                .antMatchers("/media/**").permitAll()                                   // Dodanie dostępu do zasobów statycznych
+
+                .antMatchers("/register", "register/**").permitAll()                    // Strony związane z rejestracją dostępne dla wszystkich
+
+                .antMatchers("/login", "/logout").authenticated()                       // Strony związane z logowaniem i wylogowaniem dostępne dla
+                                                                                        // użytkowników uwierzytelnionych (po zalogowaniu)
+
+                .antMatchers("/user", "/user/**").hasRole("USER")                       // Strony zaczynające się od /user dostępne dla użytkowników
+                                                                                        // uwierzytelnionych z rolą USER
+
+                .antMatchers("/manager", "/manager/**").hasRole("MANAGER")              // Strony zaczynające się od /manager dostępne dla użytkowników
+                                                                                        // uwierzytelnionych z rolą MANAGER
+
+                .antMatchers("/admin", "/admin/**").hasRole("ADMIN")                    // Strony zaczynające się od /admin dostępne dla użytkowników
+                                                                                        // uwierzytelnionych z rolą ADMIN
+
+                .anyRequest().authenticated()                                           // Wszystkie nieobsłużone ścieżki jako wymagające uwierzytelnienia
                 .and()
                 .formLogin()
                 .and()
