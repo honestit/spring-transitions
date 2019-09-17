@@ -4,13 +4,16 @@
 <html>
 <head>
     <title>Rejestracja</title>
+    <jsp:include page="/WEB-INF/views/fragments/head.jsp"/>
 </head>
 <body>
 <header>
-    <h1>Rejestracja</h1>
+    <jsp:include page="/WEB-INF/views/fragments/menu.jsp"/>
 </header>
 <section>
     <h1>Wypełnij dane rejestracyjne</h1>
+</section>
+<section>
     <div>
         <form method="post">
             <c:if test="${not empty errors}">
@@ -57,6 +60,8 @@
         </form>
     </div>
 </section>
-<footer></footer>
+<footer>
+    <jsp:include page="/WEB-INF/views/fragments/footer.jsp"/>
+</footer>
 </body>
 </html>
