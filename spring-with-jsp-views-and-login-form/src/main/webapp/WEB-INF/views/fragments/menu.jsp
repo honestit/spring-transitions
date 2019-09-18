@@ -12,6 +12,7 @@
 <%-- Adresy wykorzystywane na strone --%>
 <c:url var="homePageURL" value="/"/>
 <c:url var="registerPageURL" value="/register"/>
+<c:url var="loginPageURL" value="/login"/>
 
 <%-- Koniec sekcji adresów --%>
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -49,6 +50,9 @@
                     <div class="buttons">
                         <a class="button is-primary" href="${registerPageURL}">
                             <strong>Zarejestruj</strong>
+                        </a>
+                        <a class="button is-success" href="${loginPageURL}">
+                            <strong>Zaloguj</strong>
                         </a>
                     </div>
                 </div>
