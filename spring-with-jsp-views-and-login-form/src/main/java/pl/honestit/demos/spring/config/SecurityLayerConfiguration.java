@@ -68,7 +68,7 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/register", "register/**").permitAll()                    // Strony związane z rejestracją dostępne dla wszystkich
 
-                .antMatchers("/login", "/logout").authenticated()                       // Strony związane z logowaniem i wylogowaniem dostępne dla
+                .antMatchers("/logout").authenticated()                       // Strony związane z wylogowaniem dostępne dla
                                                                                         // użytkowników uwierzytelnionych (po zalogowaniu)
 
                 .antMatchers("/user", "/user/**").hasRole("USER")                       // Strony zaczynające się od /user dostępne dla użytkowników
