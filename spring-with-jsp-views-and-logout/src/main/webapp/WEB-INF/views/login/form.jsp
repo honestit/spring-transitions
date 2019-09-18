@@ -66,7 +66,7 @@
                             </h2>
                             <p>
                                 <span class="tag is-danger">!</span>
-                                <span>Błędne dane logowania<span>
+                                <span>Błędne dane logowania</span>
                             </p>
                         </div>
                     </c:when>
