@@ -10,4 +10,9 @@ public interface Pages {
         String FORM = "/registration/form";
         String SUCCESS = "/registration/summary";
     }
+
+    interface Login {
+
+        String FORM = "/login/form";
+    }
 }
