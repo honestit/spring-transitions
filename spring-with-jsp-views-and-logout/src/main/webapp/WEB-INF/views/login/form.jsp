@@ -72,9 +72,9 @@
                     </c:when>
                     <c:when test="${param.logout != null}">
                         <div class="content">
-                            <h1 class="title">
+                            <h2 class="subtitle">
                                 Zostałeś poprawnie wylogowany
-                            </h1>
+                            </h2>
                         </div>
                     </c:when>
                 </c:choose>
