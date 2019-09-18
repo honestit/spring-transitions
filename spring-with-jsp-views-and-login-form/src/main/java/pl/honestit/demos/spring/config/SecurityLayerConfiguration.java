@@ -58,32 +58,19 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")      // Zabezpieczenie endpointów z projektu Spring Boot Actuator
-
-                .antMatchers("/").permitAll()                                           // Strona główna dostępna dla wszystkich
-
-                .antMatchers("/webjars/**").permitAll()                                 // Dodanie dostępu do zasobów obsługiwanych przez webjars
-
-                .antMatchers("/media/**").permitAll()                                   // Dodanie dostępu do zasobów statycznych
-
-                .antMatchers("/register", "register/**").permitAll()                    // Strony związane z rejestracją dostępne dla wszystkich
-
-                .antMatchers("/logout").authenticated()                       // Strony związane z wylogowaniem dostępne dla
-                                                                                        // użytkowników uwierzytelnionych (po zalogowaniu)
-
-                .antMatchers("/user", "/user/**").hasRole("USER")                       // Strony zaczynające się od /user dostępne dla użytkowników
-                                                                                        // uwierzytelnionych z rolą USER
-
-                .antMatchers("/manager", "/manager/**").hasRole("MANAGER")              // Strony zaczynające się od /manager dostępne dla użytkowników
-                                                                                        // uwierzytelnionych z rolą MANAGER
-
-                .antMatchers("/admin", "/admin/**").hasRole("ADMIN")                    // Strony zaczynające się od /admin dostępne dla użytkowników
-                                                                                        // uwierzytelnionych z rolą ADMIN
-
-                .anyRequest().authenticated()                                           // Wszystkie nieobsłużone ścieżki jako wymagające uwierzytelnienia
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
+                .antMatchers("/").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/media/**").permitAll()
+                .antMatchers("/register", "register/**").permitAll()
+                .antMatchers("/logout").authenticated()
+                .antMatchers("/user", "/user/**").hasRole("USER")
+                .antMatchers("/manager", "/manager/**").hasRole("MANAGER")
+                .antMatchers("/admin", "/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
+            .formLogin()
                 .and()
-                .httpBasic();
+            .httpBasic();
     }
 }
