@@ -13,6 +13,7 @@
 <c:url var="homePageURL" value="/"/>
 <c:url var="registerPageURL" value="/register"/>
 <c:url var="loginPageURL" value="/login"/>
+<c:url var="logoutPageURL" value="/logout"/>
 
 <%-- Koniec sekcji adresów --%>
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -54,6 +55,10 @@
                         <a class="button is-success" href="${loginPageURL}">
                             <strong>Zaloguj</strong>
                         </a>
+                        <form method="post" action="/logout">
+                            <button class="button is-link" type="submit">Wyloguj</button>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
                     </div>
                 </div>
             </div>
