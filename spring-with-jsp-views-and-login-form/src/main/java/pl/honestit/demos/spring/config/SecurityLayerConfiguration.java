@@ -70,6 +70,10 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/", false)
                 .and()
             .httpBasic();
     }
