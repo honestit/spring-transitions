@@ -81,9 +81,9 @@
             <div class="column">
                 <c:if test="${not empty errors}">
                     <div class="content">
-                        <h1 class="title">
+                        <h2 class="subtitle">
                             Wystąpiły błędy!
-                        </h1>
+                        </h2>
                         <c:forEach items="${errors}" var="error" varStatus="stat">
                             <p>
                                 <span class="tag is-danger">!</span>
