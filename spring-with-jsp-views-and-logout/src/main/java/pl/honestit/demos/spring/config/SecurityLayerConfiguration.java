@@ -76,6 +76,12 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .defaultSuccessUrl("/", false)
                 .and()
+            .logout()
+                .logoutUrl("/logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/login?logout")
+                .and()
             .httpBasic();
     }
 }
