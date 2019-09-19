@@ -14,9 +14,9 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0, maximum-scale=1.0"/>
 
     <%-- Linki do szablonów css trafią tutaj --%>
-    <link rel="stylesheet" href="webjars/bulma/0.7.5/css/bulma.min.css">
+    <link rel="stylesheet" href="/webjars/bulma/0.7.5/css/bulma.min.css">
 
     <%-- Linki do skryptów js trafią tutaj --%>
-    <script defer src="webjars/font-awesome/5.10.1/js/all.min.js"></script>
+    <script defer src="/webjars/font-awesome/5.10.1/js/all.min.js"></script>
 
 
