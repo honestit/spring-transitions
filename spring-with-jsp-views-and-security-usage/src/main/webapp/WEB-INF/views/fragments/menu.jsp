@@ -15,6 +15,7 @@
 <c:url var="registerPageURL" value="/register"/>
 <c:url var="loginPageURL" value="/login"/>
 <c:url var="logoutPageURL" value="/logout"/>
+<c:url var="accountPageURL" value="/account"/>
 
 <%-- Koniec sekcji adresów --%>
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -50,16 +51,23 @@
             <div class="navbar=end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary" href="${registerPageURL}">
-                            <strong>Zarejestruj</strong>
-                        </a>
-                        <a class="button is-success" href="${loginPageURL}">
-                            <strong>Zaloguj</strong>
-                        </a>
-                        <form method="post" action="/logout">
-                            <button class="button is-link" type="submit">Wyloguj</button>
-                            <sec:csrfInput/>
-                        </form>
+                        <sec:authorize access="isAnonymous()">
+                            <a class="button is-primary" href="${registerPageURL}">
+                                <strong>Zarejestruj</strong>
+                            </a>
+                            <a class="button is-success" href="${loginPageURL}">
+                                <strong>Zaloguj</strong>
+                            </a>
+                        </sec:authorize>
+                        <sec:authorize access="isAuthenticated()">
+                            <a class="button is-primary" href="${accountPageURL}">
+                                <strong>Account</strong>
+                            </a>
+                            <form method="post" action="/logout">
+                                <button class="button is-link" type="submit">Wyloguj</button>
+                                <sec:csrfInput/>
+                            </form>
+                        </sec:authorize>
                     </div>
                 </div>
             </div>
