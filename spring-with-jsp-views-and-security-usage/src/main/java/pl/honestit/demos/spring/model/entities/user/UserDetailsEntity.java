@@ -30,6 +30,6 @@ public class UserDetailsEntity extends ParentEntity {
     private String lastName;
     @Column(name = "pesel")
     private String pesel;
-    @Column(name = "data_of_birth")
-    private LocalDate dataOfBirth;
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
 }
