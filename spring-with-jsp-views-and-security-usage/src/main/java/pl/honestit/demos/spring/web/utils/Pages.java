@@ -15,4 +15,9 @@ public interface Pages {
 
         String FORM = "/login/form";
     }
+
+    interface User {
+
+        String ACCOUNT = "/user/account";
+    }
 }
