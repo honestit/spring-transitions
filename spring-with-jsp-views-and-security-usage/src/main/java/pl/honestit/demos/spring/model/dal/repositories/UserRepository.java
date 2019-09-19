@@ -1,5 +1,6 @@
 package pl.honestit.demos.spring.model.dal.repositories;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.honestit.demos.spring.model.entities.user.UserEntity;
@@ -77,4 +78,13 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @return liczba użytkowników o podanej nazwie
      */
     long countByUsername(String username);
+
+    /**
+     * Metoda zwraca użytkownika z pobranymi danymi szczegółówymi
+     *
+     * @param username nazwa użytkownika
+     * @return encja użytkownika ze szczegółami
+     */
+    @EntityGraph(attributePaths = "details")
+    UserEntity getWithDetailsByUsername(String username);
 }
