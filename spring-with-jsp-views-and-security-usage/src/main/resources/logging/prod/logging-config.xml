@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!--
+        Do ustawienia na swoją nazwę aplikacji
+    -->
+    <property name="log.file.name" value="spring-transitions"/>
+    <!--
+        Do ustawienia na inny katalog jeżeli to konieczne
+    -->
+    <property name="log.directory" value="app-logs"/>
+
+    <appender name="Console"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--
+                Tutaj określamy format zapisu pojedynczego logu.
+                Więcej: https://logback.qos.ch/manual/layouts.html
+            -->
+            <Pattern>
+                %magenta(%d{ISO8601}) %highlight(%-5level) [%green(%t)] %blue(%C{1.}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="RollingFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--
+            Tutaj ustalamy nazwę naszego pliku z logami (podstawowego)
+            i miejsce jego utworzenia.
+
+            Przyjmujemy, że logi będą zapisywane w katalogu domowym użytkownika,
+            który uruchomił aplikację.
+        -->
+        <file>${user.home}/${log.directory}/${log.file.name}.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--
+                Pliki z logami archiwalnymi będą umieszczane w katalogu logs.
+                Katalog logs powstanie automatycznie
+            -->
+            <fileNamePattern>${user.home}/${log.directory}/archive/${log.file.name}-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--
+                    Kiedy plik z logami przekroczy 10 MB to zostanie przeniesiony
+                    do katalogu logs pod nową zmianą, a nowe logi będą pisane
+                    do nowego pliku log.log
+                -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!--
+        Tutaj określamy domyślny poziom logowania aplikacji.
+        Wszystkie nieskonfigurowane pakiety/klasy będą miały właśnie taki
+    -->
+    <root level="warn">
+        <!--
+            Określamy, że domyślnie logi pojawiają się i w konsoli i w pliku
+        -->
+        <appender-ref ref="RollingFile"/>
+        <appender-ref ref="Console"/>
+    </root>
+
+    <!--
+        Jeżeli chcemy własne poziomy logowania, to dodajemy je w ten sposób
+    -->
+    <logger name="pl.honestit.demos.spring" level="warn" additivity="false">
+        <appender-ref ref="RollingFile"/>
+        <appender-ref ref="Console"/>
+    </logger>
+
+</configuration>
