@@ -15,7 +15,7 @@
 <c:url var="registerPageURL" value="/register"/>
 <c:url var="loginPageURL" value="/login"/>
 <c:url var="logoutPageURL" value="/logout"/>
-<c:url var="accountPageURL" value="/account"/>
+<c:url var="accountPageURL" value="/user/account"/>
 
 <%-- Koniec sekcji adresów --%>
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
