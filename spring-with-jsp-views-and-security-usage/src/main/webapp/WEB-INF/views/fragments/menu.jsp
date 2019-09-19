@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -57,7 +58,7 @@
                         </a>
                         <form method="post" action="/logout">
                             <button class="button is-link" type="submit">Wyloguj</button>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <sec:csrfInput/>
                         </form>
                     </div>
                 </div>
