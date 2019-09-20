@@ -97,3 +97,4 @@ Zestaw linków, które mogą się przy tym wszystkim przydać:
 1. [https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku](https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku)
 1. [https://devcenter.heroku.com/articles/java-support](https://devcenter.heroku.com/articles/java-support)
 1. [https://devcenter.heroku.com/articles/connecting-to-relational-databases-on-heroku-with-java#connecting-to-a-database-remotely](https://devcenter.heroku.com/articles/connecting-to-relational-databases-on-heroku-with-java#connecting-to-a-database-remotely)
+1. [https://devcenter.heroku.com/articles/keys](https://devcenter.heroku.com/articles/keys)
