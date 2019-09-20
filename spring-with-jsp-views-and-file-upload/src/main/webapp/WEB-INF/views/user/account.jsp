@@ -5,23 +5,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${user.username}</title>
+    <title>Twoje konto</title>
     <jsp:include page="/WEB-INF/views/fragments/head.jsp"/>
 </head>
 <body class="has-navbar-fixed-top">
 <header>
     <jsp:include page="/WEB-INF/views/fragments/menu.jsp"/>
 </header>
-<section class="hero is-bold is-medium">
+<section class="section">
     <div class="container">
-        <div class="hero-body">
-            <h1 class="title">
-                Witaj ${user.username}
-            </h1>
-            <h2 class="subtitle">
-                Poniżej znajduje się podsumowanie Twoich danych
-            </h2>
-        </div>
+        <h1 class="title">
+            Witaj ${user.username}
+        </h1>
+        <h2 class="subtitle">
+            Poniżej znajduje się podsumowanie Twoich danych
+        </h2>
     </div>
 </section>
 <section class="section">
@@ -99,7 +97,7 @@
                                     </button>
                                 </div>
                                 <div class="control">
-                                    <button class="button is-success is-link" type="submit"
+                                    <button class="button is-warning is-link" type="submit"
                                             name="cancel">Anuluj
                                     </button>
                                 </div>
@@ -109,7 +107,55 @@
                     </div>
                 </form>
             </div>
-            <div class="column"></div>
+            <div class="column">
+                <div class="content">
+                    <form enctype="multipart/form-data" method="post">
+                        <div class="field">
+                            <div class="label" for="file">Twój awatar</div>
+                            <div class="file has-name">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" name="file" id="file" accept="image/*">
+                                    <span class="file-cta">
+                                      <span class="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                      </span>
+                                      <span class="file-label">
+                                        Wybierz zdjęcie awatara
+                                      </span>
+                                    </span>
+                                    <span class="file-name">
+                                      ---
+                                    </span>
+                                </label>
+                            </div>
+
+                            <script>
+                                var fileInput = document.querySelector('#file');
+                                fileInput.onchange = function () {
+                                    if (fileInput.files.length > 0) {
+                                        var fileName = document.querySelector('.file .file-name');
+                                        fileName.textContent = fileInput.files[0].name;
+                                    }
+                                }
+                            </script>
+                        </div>
+                        <sec:csrfInput/>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-success is-link" type="submit"
+                                        name="upload">
+                                    Zapisz
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="content">
+                    <c:if test="${hasProfileFile}">
+                        <img src="/account/profile-file"/>
+                    </c:if>
+                </div>
+            </div>
             <div class="column"></div>
         </div>
     </div>
