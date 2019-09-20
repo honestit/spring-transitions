@@ -50,6 +50,15 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Zależności do PostgreSQL -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+
+
         <!-- Zależności do biblioteki Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
