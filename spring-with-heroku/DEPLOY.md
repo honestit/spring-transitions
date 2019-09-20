@@ -98,3 +98,4 @@ Zestaw linków, które mogą się przy tym wszystkim przydać:
 1. [https://devcenter.heroku.com/articles/java-support](https://devcenter.heroku.com/articles/java-support)
 1. [https://devcenter.heroku.com/articles/connecting-to-relational-databases-on-heroku-with-java#connecting-to-a-database-remotely](https://devcenter.heroku.com/articles/connecting-to-relational-databases-on-heroku-with-java#connecting-to-a-database-remotely)
 1. [https://devcenter.heroku.com/articles/keys](https://devcenter.heroku.com/articles/keys)
+1. [https://stackoverflow.com/questions/27810419/git-push-heroku-master-is-still-asking-for-authentication](https://stackoverflow.com/a/28331676/1980918)
