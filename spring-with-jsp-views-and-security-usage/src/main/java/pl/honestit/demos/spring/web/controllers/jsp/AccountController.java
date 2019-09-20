@@ -18,13 +18,13 @@ import java.time.LocalDate;
 
 @Slf4j
 @Controller
-@RequestMapping("/user/account")
-public class UserAccountController {
+@RequestMapping("/account")
+public class AccountController {
 
     private final UserRepository userRepository;
     private final UserDetailsRepository userDetailsRepository;
 
-    public UserAccountController(UserRepository userRepository, UserDetailsRepository userDetailsRepository) {
+    public AccountController(UserRepository userRepository, UserDetailsRepository userDetailsRepository) {
         this.userRepository = userRepository;
         this.userDetailsRepository = userDetailsRepository;
     }
