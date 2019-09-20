@@ -1,6 +1,7 @@
 package pl.honestit.demos.spring.startup;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -16,11 +17,10 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Component
-/*
-    Wskazujemy, że nasz komponent ma być aktywny tylko w profilu o nazwie dev.
- */
-@Profile("dev")
 public class SetupDataCreator implements ApplicationRunner {
+
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -34,8 +34,10 @@ public class SetupDataCreator implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         log.info("--- Tworzenie użytkowników głównych ---");
         createMainUsers();
-        log.info("--- Tworzenie użytkowników testowych ---");
-        createTestUsers();
+        if (activeProfile.equals("dev")) {
+            log.info("--- Tworzenie użytkowników testowych ---");
+            createTestUsers();
+        }
     }
 
     private void createTestUsers() {
