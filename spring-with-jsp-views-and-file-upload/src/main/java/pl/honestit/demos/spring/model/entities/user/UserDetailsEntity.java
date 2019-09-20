@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import pl.honestit.demos.spring.model.entities.base.ParentEntity;
+import pl.honestit.demos.spring.model.entities.files.FileEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "example_user_details")
-@Getter @Setter @ToString(exclude = "owner")
+@Getter @Setter @ToString(exclude = {"owner", "profileFile"})
 public class UserDetailsEntity extends ParentEntity {
 
     @OneToOne
@@ -22,7 +23,7 @@ public class UserDetailsEntity extends ParentEntity {
         tylko do odczytu. Można je wykorzystać np. w metodzie toString
      */
     @Column(name = "owner_id", insertable = false, updatable = false)
-    private Long owner_id;
+    private Long ownerId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -32,4 +33,11 @@ public class UserDetailsEntity extends ParentEntity {
     private String pesel;
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "profile_file_id")
+    private FileEntity profileFile;
+
+    @Column(name = "profile_file_id", insertable = false, updatable = false)
+    private Long profileFileId;
 }
