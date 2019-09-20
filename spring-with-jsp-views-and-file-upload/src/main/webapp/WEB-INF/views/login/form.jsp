@@ -30,7 +30,7 @@
                     <div class="field">
                         <label class="label" for="username">Nazwa użytkownika</label>
                         <div class="control has-icons-left">
-                            <input class="input" type="text" id="username" name="username"/>
+                            <input class="input" type="text" id="username" name="username" autofocus/>
                             <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>
