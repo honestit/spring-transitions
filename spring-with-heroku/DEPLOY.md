@@ -36,7 +36,19 @@ Włącz dowolną konsole systemową (np. `CMD` albo `Git bash`) i następnie
 
    > Zweryfikujesz w ten sposób czy Twoje połączenie jest poprawne.
    
-### 5. Utworzenie aplikacji
+### 5. Skonfigurowanie aplikacji
+
+Najważniejszą rzeczą, o którą musisz zadbać, to ustawienie w pliku `application.properties` klucza `server.port` na wartość `${PORT:8080}`. W Heroku nie my decydujemy o porcie, na którym działa aplikacja a sama platforma. Stąd nasza aplikacja musi bazować na zewnętrznych wartościach, ale możemy zostawić wartość domyślną dla lokalnego uruchomienia.
+
+Kiedy chcemu używać bazy danych, np. PostgreSQL, to również `datasource` należy skonfigurować w oparciu o zewnetrzne ustawienia. Odpowiednio:
+
+`spring.datasource.url=${SPRING_DATASOURCE_URL}`
+
+`spring.datasource.username=${SPRING_DATASOURCE_USERNAME}`
+
+`spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}`
+   
+### 6. Utworzenie aplikacji
 
 Stwórz nową aplikację korzystajać z poniższego polecenia:
 
@@ -55,7 +67,7 @@ Krótkie wyjaśnienie co jest co:
 * `--region eu` wskazuje, że nasza aplikacja powinna być obsługiwana przez serwery europejskie. Domyślnie są to serwery amerykańskie i w Polsce apka działa po prostu wolniej
 * `--stack heroku-18` wskazuje, aby używać najnowszej wersji konfiguracji Heroku
 
-### 6. Deployowanie aplikacji
+### 7. Deployowanie aplikacji
 
 Deployowanie aplikacji odbywa się za każdym razem gdy robimy `push` do brancha `heroku` (jeżeli tak go nazwaliśmy w poprzednim poleceniu).
 
@@ -75,7 +87,7 @@ Przy próbie deploy'owania możemy zostać poproszeni o podanie danych do logowa
 
 > Hasło (token autoryzacyjny) możemy też znaleźć w ustawieniach konta Heroku: [Application authorization](https://dashboard.heroku.com/account/applications)
 
-### 7. Monitorowanie aplikacji
+### 8. Monitorowanie aplikacji
 
 Naszą aplikację możemy znaleźć na dashboard'zie w heroku: [Dashboard](https://dashboard.heroku.com/apps)
 
