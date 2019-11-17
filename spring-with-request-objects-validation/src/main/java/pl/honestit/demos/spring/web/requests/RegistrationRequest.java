@@ -14,15 +14,15 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor @AllArgsConstructor
 public class RegistrationRequest {
 
-    @NotBlank
+    @NotBlank(message = "Nazwa użytkownika musi być uzupełniona")
     private String username;
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email musi być uzupełniony")
+    @Email(message = "Email musi być poprawny")
     private String email;
-    @NotBlank
-    @Size(min = 8)
+    @NotBlank(message = "Hasło musi być uzupełnione")
+    @Size(min = 8, message = "Hasło musi zawierać minimum 8 znaków")
     private String password;
-    @NotBlank
-    @Size(min = 8)
+    @NotBlank(message = "Powtórzone hasło musi być uzupełnione")
+    @Size(min = 8, message = "Powtórzone hasło musi zawierać minimum 8 znaków")
     private String rePassword;
 }

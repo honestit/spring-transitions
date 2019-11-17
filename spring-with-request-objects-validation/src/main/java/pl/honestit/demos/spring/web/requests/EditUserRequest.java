@@ -10,10 +10,10 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor @AllArgsConstructor
 public class EditUserRequest {
-    
+
     private String firstName;
     private String lastName;
-    @PESEL
+    @PESEL(message = "PESEL musi być poprawny")
     private String pesel;
     private String dateOfBirth;
 
