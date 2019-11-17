@@ -27,21 +27,6 @@
         </div>
     </div>
 </section>
-<section class="section">
-    <form method="post">
-        <select name="category" onchange="this.form.submit()">
-            <c:forEach items="${categories}" var="category">
-                <option value="${category}">${category}</option>
-            </c:forEach>
-        </select>
-        <br/>
-        <c:forEach items="${subcategories}" var="subcategory">
-            <input type="checkbox" name="subcategory" value="${subcategory}">${subcategory}</input>
-        </c:forEach>
-        <sec:csrfInput/>
-        <input type="submit" value="Zapisz" name="save"/>
-    </form>
-</section>
 <footer class="footer">
     <jsp:include page="/WEB-INF/views/fragments/footer.jsp"/>
 </footer>
