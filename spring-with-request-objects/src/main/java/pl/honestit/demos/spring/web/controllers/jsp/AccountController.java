@@ -14,6 +14,7 @@ import pl.honestit.demos.spring.model.dal.repositories.UserRepository;
 import pl.honestit.demos.spring.model.entities.files.FileEntity;
 import pl.honestit.demos.spring.model.entities.user.UserDetailsEntity;
 import pl.honestit.demos.spring.model.entities.user.UserEntity;
+import pl.honestit.demos.spring.web.requests.EditUserRequest;
 import pl.honestit.demos.spring.web.utils.Pages;
 
 import java.io.IOException;
@@ -59,21 +60,20 @@ public class AccountController {
     }
 
     @PostMapping(params = {"save"})
-    public String saveEditUserData(String firstName, String lastName, String pesel, String dateOfBirth, Principal principal) {
+    public String saveEditUserData(EditUserRequest editUserRequest, Principal principal) {
         UserEntity loggedUser = userRepository.getWithDetailsByUsername(principal.getName());
         log.debug("Zmiana danych użytkownika: {}", loggedUser);
-        log.debug("firstName = {}, lastName = {}, pesel = {}, dateOfBirt = {}",
-                firstName, lastName, pesel, dateOfBirth);
+        log.debug("Nowe dane: {}", editUserRequest;
 
         UserDetailsEntity details = loggedUser.getDetails();
         if (details == null) {
             details = new UserDetailsEntity();
             details.setOwner(loggedUser);
         }
-        details.setFirstName(firstName);
-        details.setLastName(lastName);
-        details.setPesel(pesel);
-        details.setDateOfBirth(LocalDate.parse(dateOfBirth));
+        details.setFirstName(editUserRequest.getFirstName());
+        details.setLastName(editUserRequest.getLastName());
+        details.setPesel(editUserRequest.getPesel());
+        details.setDateOfBirth(editUserRequest.getDateOfBirth());
 
         userDetailsRepository.save(details);
         return "redirect:/account";
