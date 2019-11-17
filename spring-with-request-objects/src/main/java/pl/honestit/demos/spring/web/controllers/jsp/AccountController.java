@@ -63,7 +63,7 @@ public class AccountController {
     public String saveEditUserData(EditUserRequest editUserRequest, Principal principal) {
         UserEntity loggedUser = userRepository.getWithDetailsByUsername(principal.getName());
         log.debug("Zmiana danych użytkownika: {}", loggedUser);
-        log.debug("Nowe dane: {}", editUserRequest;
+        log.debug("Nowe dane: {}", editUserRequest);
 
         UserDetailsEntity details = loggedUser.getDetails();
         if (details == null) {
