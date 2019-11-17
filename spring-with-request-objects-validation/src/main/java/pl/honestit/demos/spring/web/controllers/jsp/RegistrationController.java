@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.honestit.demos.spring.model.dal.repositories.UserRepository;
@@ -13,8 +16,8 @@ import pl.honestit.demos.spring.model.entities.user.UserRole;
 import pl.honestit.demos.spring.web.requests.RegistrationRequest;
 import pl.honestit.demos.spring.web.utils.Pages;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/register")
@@ -35,22 +38,21 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String processRegistrationPage(RegistrationRequest registrationRequest,
-                                          Model model) {
+    public String processRegistrationPage(@ModelAttribute("data") @Valid RegistrationRequest registrationRequest, Errors errors, Model model) {
         log.debug("Żądanie rejestracji użytkownika: {}", registrationRequest);
-        List<String> errors = validateRegistrationData(registrationRequest);
 
-        if (!errors.isEmpty()) {
-            model.addAttribute("errors", errors);
+        // Uzupełnienie potencjalnych błędów o błędy "biznesowe"
+        updateErrors(registrationRequest, errors);
+        if (errors.hasErrors()) {
+            // Pobranie zbioru pól, dla których są błędy i wstawienie do modelu
+            model.addAttribute("invalidFields", errors.getFieldErrors().stream()
+                    .map(FieldError::getField).distinct().collect(Collectors.toSet()));
             return Pages.Registration.FORM;
-        } else {
-            try {
-                registerUser(registrationRequest);
-                model.addAttribute("successMsg", "Rejestracja przebiegła pomyślnie!");
-            } catch (Exception ex) {
-                model.addAttribute("errorMsg", "Coś poszło nie tak");
-            }
-            return Pages.Registration.SUCCESS;
+        }
+        else {
+            registerUser(registrationRequest);
+            model.addAttribute("successMsg", "Rejestracja przebiegła pomyślnie");
+            return Pages.Registration.SUMMARY;
         }
     }
 
@@ -65,27 +67,16 @@ public class RegistrationController {
         userRepository.save(userToRegister);
     }
 
-    private List<String> validateRegistrationData(RegistrationRequest registrationRequest) {
-        List<String> errors = new ArrayList<>();
-        if (registrationRequest.getUsername().trim().isEmpty()) {
-            errors.add("Nazwa użytkownika nie może być pusta");
-        }
-        if (registrationRequest.getEmail().trim().isEmpty()) {
-            errors.add("Email nie może być pusty");
-        }
-        if (registrationRequest.getEmail().trim().isEmpty()) {
-            errors.add("Hasło nie może być puste");
-        }
+    private void updateErrors(RegistrationRequest registrationRequest, Errors bindingResult) {
         if (!registrationRequest.getPassword().equals(registrationRequest.getRePassword())) {
-            errors.add("Niezgodne hasła");
+            bindingResult.reject("rePassword", null, "Niezgodne hasła");
         }
         try {
             if (userRepository.countByUsername(registrationRequest.getUsername()) > 0) {
-                errors.add("Nazwa użytkownika jest już zajęta");
+                bindingResult.reject("username", null, "Nazwa użytkownika jest już zajęta");
             }
         } catch (Exception ex) {
-            errors.add("Nie udało się sprawdzić nazwy użytkownika");
+            bindingResult.reject("username", null, "Nie udało się sprawdzić nazwy użytkownika");
         }
-        return errors;
     }
 }

@@ -8,7 +8,7 @@ public interface Pages {
     interface Registration {
 
         String FORM = "/registration/form";
-        String SUCCESS = "/registration/summary";
+        String SUMMARY = "/registration/summary";
     }
 
     interface Login {
