@@ -1,5 +1,6 @@
 package pl.honestit.demos.spring.web.controllers.jsp;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/register")
+@Slf4j
 public class RegistrationController {
 
     private final UserRepository userRepository;
@@ -35,6 +37,7 @@ public class RegistrationController {
     @PostMapping
     public String processRegistrationPage(RegistrationRequest registrationRequest,
                                           Model model) {
+        log.debug("Żądanie rejestracji użytkownika: {}", registrationRequest);
         List<String> errors = validateRegistrationData(registrationRequest);
 
         if (!errors.isEmpty()) {
