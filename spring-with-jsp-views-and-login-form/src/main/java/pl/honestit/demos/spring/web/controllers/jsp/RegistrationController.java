@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.honestit.demos.spring.model.dal.repositories.UserRepository;
 import pl.honestit.demos.spring.model.entities.user.UserEntity;
 import pl.honestit.demos.spring.model.entities.user.UserRole;
+import pl.honestit.demos.spring.web.requests.RegistrationRequest;
 import pl.honestit.demos.spring.web.utils.Pages;
 
 import java.util.ArrayList;
@@ -32,19 +33,16 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String processRegistrationPage(String username,
-                                          String email,
-                                          String password,
-                                          String rePassword,
+    public String processRegistrationPage(RegistrationRequest registrationRequest,
                                           Model model) {
-        List<String> errors = validateRegistrationData(username, email, password, rePassword);
+        List<String> errors = validateRegistrationData(registrationRequest);
 
         if (!errors.isEmpty()) {
             model.addAttribute("errors", errors);
             return Pages.Registration.FORM;
         } else {
             try {
-                registerUser(username, email, password);
+                registerUser(registrationRequest);
                 model.addAttribute("successMsg", "Rejestracja przebiegła pomyślnie!");
             } catch (Exception ex) {
                 model.addAttribute("errorMsg", "Coś poszło nie tak");
@@ -53,33 +51,33 @@ public class RegistrationController {
         }
     }
 
-    private void registerUser(String username, String email, String password) {
+    private void registerUser(RegistrationRequest registrationRequest) {
         UserEntity userToRegister = new UserEntity();
-        userToRegister.setUsername(username);
-        userToRegister.setEmail(email);
-        userToRegister.setPassword(passwordEncoder.encode(password));
+        userToRegister.setUsername(registrationRequest.getUsername());
+        userToRegister.setEmail(registrationRequest.getEmail());
+        userToRegister.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
         userToRegister.setEnabled(true);
         userToRegister.getRoles().add(new UserRole("ROLE_USER"));
 
         userRepository.save(userToRegister);
     }
 
-    private List<String> validateRegistrationData(String username, String email, String password, String rePassword) {
+    private List<String> validateRegistrationData(RegistrationRequest registrationRequest) {
         List<String> errors = new ArrayList<>();
-        if (username.trim().isEmpty()) {
+        if (registrationRequest.getUsername().trim().isEmpty()) {
             errors.add("Nazwa użytkownika nie może być pusta");
         }
-        if (email.trim().isEmpty()) {
+        if (registrationRequest.getEmail().trim().isEmpty()) {
             errors.add("Email nie może być pusty");
         }
-        if (password.trim().isEmpty()) {
+        if (registrationRequest.getEmail().trim().isEmpty()) {
             errors.add("Hasło nie może być puste");
         }
-        if (!password.equals(rePassword)) {
+        if (!registrationRequest.getPassword().equals(registrationRequest.getRePassword())) {
             errors.add("Niezgodne hasła");
         }
         try {
-            if (userRepository.countByUsername(username) > 0) {
+            if (userRepository.countByUsername(registrationRequest.getUsername()) > 0) {
                 errors.add("Nazwa użytkownika jest już zajęta");
             }
         } catch (Exception ex) {
