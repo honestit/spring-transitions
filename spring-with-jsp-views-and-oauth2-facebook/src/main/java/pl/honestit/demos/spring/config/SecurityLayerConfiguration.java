@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.honestit.demos.spring.security.mvc.CustomUserDetailsService;
 
 import javax.sql.DataSource;
 
@@ -22,31 +23,20 @@ import javax.sql.DataSource;
 @Slf4j
 public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
 
-    /*
-        Wstrzykiwane jest podstawowe źródło danych, skonfigurowane w pliku application.properties
-     */
-    private final DataSource dataSource;
-
-    public SecurityLayerConfiguration(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    @Bean
+    public CustomUserDetailsService customUserDetailsService() {
+        return new CustomUserDetailsService();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("SELECT username, password, enabled FROM example_users WHERE username = ?")
-                /*
-                    Zapytanie jest wykonywane bezpośrednio do jednej tabeli, ponieważ mamy w niej zarówno informacje
-                    o nazwie użytkownika jak i jego role.
-                 */
-                .authoritiesByUsernameQuery("SELECT username, role_name FROM example_users_roles WHERE username = ?");
+        auth.userDetailsService(customUserDetailsService())
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
