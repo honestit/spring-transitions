@@ -25,6 +25,8 @@ public class UserEntity extends ParentEntity {
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(name = "auth_provider")
+    private String authProvider;
     private Boolean enabled = Boolean.FALSE;
     private String email;
 
