@@ -51,7 +51,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         UserEntity userEntity = userRepository.findByUsername(oAuth2User.getAttribute("email"))
                 .orElseGet(() -> {
                     UserEntity s = userRepository.save(UserEntity.builder()
-                            .username(oAuth2User.getAttribute("email"))
+                            .username(oAuth2User.getName())
                             .email(oAuth2User.getAttribute("email"))
                             .details(UserDetailsEntity.builder()
                                     .firstName(attributes.get("first_name"))
