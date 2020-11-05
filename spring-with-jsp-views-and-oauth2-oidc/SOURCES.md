@@ -17,3 +17,7 @@
 [How do you save users who have logged in with OAuth 2 (Spring)](https://stackoverflow.com/questions/48598417/how-do-you-save-users-who-have-logged-in-with-oauth-2-spring)
 
 [Spring Security OAuth2 Reference](https://docs.spring.io/spring-security/site/docs/current/reference/html5/#oauth2)
+
+[Google API Console](https://console.developers.google.com)
+
+[Facebook Developer Apps](https://developers.facebook.com/apps/)
