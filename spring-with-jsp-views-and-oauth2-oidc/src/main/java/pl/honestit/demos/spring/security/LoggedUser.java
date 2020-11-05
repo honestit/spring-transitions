@@ -20,13 +20,16 @@ import java.util.Set;
  * logowanego przy użyciu podstawowego Security (MVC) i oauth2
  */
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class LoggedUser implements UserDetails, OAuth2User {
+public class LoggedUser implements UserDetails, OAuth2User, OidcUser {
 
     private String username;
     private String password;
     private Boolean active;
     private Set<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
+    private OidcUserInfo oidcUserInfo;
+    private OidcIdToken oidcIdToken;
+    private Map<String, Object> claims;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -71,5 +74,20 @@ public class LoggedUser implements UserDetails, OAuth2User {
     @Override
     public String getName() {
         return username;
+    }
+
+    @Override
+    public Map<String, Object> getClaims() {
+        return claims;
+    }
+
+    @Override
+    public OidcUserInfo getUserInfo() {
+        return oidcUserInfo;
+    }
+
+    @Override
+    public OidcIdToken getIdToken() {
+        return oidcIdToken;
     }
 }
