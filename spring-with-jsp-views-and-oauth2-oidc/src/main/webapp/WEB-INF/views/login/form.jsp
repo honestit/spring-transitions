@@ -93,6 +93,14 @@
                             <span>Zaloguj z Facebook</span>
                         </button>
                     </a>
+                    <a href="/oauth2/authorization/google">
+                        <button class="button is-medium">
+                        <span class="icon is-medium">
+                            <i class="fab fa-google"></i>
+                        </span>
+                            <span>Zaloguj z Google</span>
+                        </button>
+                    </a>
                 </p>
             </div>
         </div>

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.honestit.demos.spring.security.mvc.CustomUserDetailsService;
 import pl.honestit.demos.spring.security.oauth2.CustomOAuth2UserService;
+import pl.honestit.demos.spring.security.oidc.CustomOIDCUserService;
 
 @Configuration
 /*
@@ -34,6 +35,11 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public CustomOAuth2UserService customOAuth2UserService() {
         return new CustomOAuth2UserService();
+    }
+
+    @Bean
+    public CustomOIDCUserService customOIDCUserService() {
+        return new CustomOIDCUserService();
     }
 
     @Override
@@ -82,6 +88,7 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .defaultSuccessUrl("/account", true)
                 .userInfoEndpoint()
-                    .userService(customOAuth2UserService());
+                    .userService(customOAuth2UserService())
+                    .oidcUserService(customOIDCUserService());
     }
 }
