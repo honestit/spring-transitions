@@ -16,7 +16,7 @@
     <div class="container">
         <div class="hero-body">
             <h1 class="title">
-                Witaj ${user.username}
+                Witaj ${user.email}
             </h1>
             <h2 class="subtitle">
                 Poniżej znajduje się podsumowanie Twoich danych

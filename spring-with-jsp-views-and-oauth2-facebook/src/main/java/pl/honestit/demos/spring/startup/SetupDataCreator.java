@@ -39,7 +39,7 @@ public class SetupDataCreator implements ApplicationRunner {
     }
 
     private void createTestUsers() {
-        LongStream.range(1, 100).forEach(this::createTestUser);
+        LongStream.range(1, 10).forEach(this::createTestUser);
     }
 
     private void createTestUser(Long id) {

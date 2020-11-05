@@ -82,6 +82,20 @@
             </div>
             <div class="column"></div>
         </div>
+        <div class="columns">
+            <div class="column">
+                <p class="buttons">
+                    <a href="/oauth2/authorization/facebook">
+                        <button class="button is-medium">
+                        <span class="icon is-medium">
+                            <i class="fab fa-facebook"></i>
+                        </span>
+                            <span>Zaloguj z Facebook</span>
+                        </button>
+                    </a>
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 <footer class="footer">

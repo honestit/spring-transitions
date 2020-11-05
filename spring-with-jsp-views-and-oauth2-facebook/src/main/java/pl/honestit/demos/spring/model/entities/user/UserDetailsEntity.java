@@ -1,8 +1,6 @@
 package pl.honestit.demos.spring.model.entities.user;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import pl.honestit.demos.spring.model.entities.base.ParentEntity;
 
 import javax.persistence.*;
@@ -10,7 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "example_user_details")
-@Getter @Setter @ToString(exclude = "owner")
+@Getter @Setter @ToString(exclude = "owner") @NoArgsConstructor @AllArgsConstructor @Builder
 public class UserDetailsEntity extends ParentEntity {
 
     @OneToOne

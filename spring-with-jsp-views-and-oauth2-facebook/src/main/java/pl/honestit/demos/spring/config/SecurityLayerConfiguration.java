@@ -1,7 +1,6 @@
 package pl.honestit.demos.spring.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.honestit.demos.spring.security.mvc.CustomUserDetailsService;
-
-import javax.sql.DataSource;
+import pl.honestit.demos.spring.security.oauth2.CustomOAuth2UserService;
 
 @Configuration
 /*
@@ -31,6 +29,11 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public CustomUserDetailsService customUserDetailsService() {
         return new CustomUserDetailsService();
+    }
+
+    @Bean
+    public CustomOAuth2UserService customOAuth2UserService() {
+        return new CustomOAuth2UserService();
     }
 
     @Override
@@ -73,6 +76,12 @@ public class SecurityLayerConfiguration extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .logoutSuccessUrl("/login?logout")
                 .and()
-            .httpBasic();
+            .httpBasic()
+                .disable()
+            .oauth2Login()
+                .loginPage("/login")
+                .defaultSuccessUrl("/account", true)
+                .userInfoEndpoint()
+                    .userService(customOAuth2UserService());
     }
 }

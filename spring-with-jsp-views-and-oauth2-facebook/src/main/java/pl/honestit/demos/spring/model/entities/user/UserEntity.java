@@ -1,7 +1,6 @@
 package pl.honestit.demos.spring.model.entities.user;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import pl.honestit.demos.spring.model.entities.base.ParentEntity;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ import java.util.Set;
         @Index(columnList = "username"),
         @Index(columnList = "email")
 })
-@Getter @Setter
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder
 public class UserEntity extends ParentEntity {
 
     @Column(unique = true, nullable = false)
@@ -30,7 +29,7 @@ public class UserEntity extends ParentEntity {
     private Boolean enabled = Boolean.FALSE;
     private String email;
 
-    @OneToOne(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private UserDetailsEntity details;
 
     /*

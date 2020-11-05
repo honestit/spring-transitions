@@ -6,11 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.honestit.demos.spring.model.dal.repositories.UserRepository;
-import pl.honestit.demos.spring.model.entities.user.UserEntity;
 import pl.honestit.demos.spring.security.LoggedUser;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CustomUserDetailsService implements UserDetailsService {
